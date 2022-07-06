@@ -1,0 +1,25 @@
+#start
+{
+
+    height: 50px;
+    width: 200px;
+    font-family: cursive;
+    font-size: larger;
+    font-style: italic;
+    color:red;
+    border-radius: 50px;
+    cursor:progress;
+}
+#my_canvas
+{
+    border: 1px solid black;
+}
+#container
+{
+    text-align:center;
+}
+#score
+{
+    font-size: xx-large;
+    font-family: "Permanent Marker",cursive;
+}
