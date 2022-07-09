@@ -12,6 +12,19 @@ let running
 let snake ;
 let myrestButton=document.querySelector('#start')
 myrestButton.addEventListener('click',resetGame);
+let myinfo=document.querySelector('#myinfo');
+let Fruit;
+document.addEventListener("keydown", (e) => {
+    switch (e.key) 
+    {
+      case "ArrowLeft":
+      case "ArrowRight"://this peice of code just disables automatic scrolling
+      case "ArrowUp"://when arrow key are pressed
+      case "ArrowDown":
+      e.preventDefault();
+        break;
+    }
+});
 class Snake_Obj_creator 
 {   //this is a template to create any kind of of square object at X,Y position
     constructor(X, Y) 
@@ -31,6 +44,7 @@ function init()
     next_move_Y = 0;
     scorediv = document.querySelector("#score");
     score = 0;
+    scorediv.textContent=score;
     running = true;
     let i;
     snake = [];//this thing stores all the body parts of the snake
@@ -40,8 +54,9 @@ function init()
         snake.push(obj);//initializing snake
     }
     snake.forEach(snake_square)//for Each snake obj draw a square
+    timer=3;//this is a timer to start the game
+    
 }
-init();
 function snake_square(snakeobj) 
 {
     ctx.fillStyle = "green"//filling the inner rectangle color
@@ -117,10 +132,9 @@ function generateFruit()//need to be repeatedly called
     draw_square(X, Y)
     return Fruit;
 }
-let Fruit = generateFruit();//generates the first fruit
-document.addEventListener('keydown', update_next_move);//calling the update_next_move depending on what key we press
+
 function Refresh() 
-{
+{   myinfo.textContent="Running..."
     nextMove();
     let Head = snake[snake.length - 1];
     checkCollison(Head);
@@ -134,18 +148,17 @@ function Refresh()
         snake.unshift(newObj)
     }
 }
-let end_flag;
+//let end_flag;
 function checkCollison(Head) 
 {
     let i = 0;
-    if(Head.x>=can_X || Head.y>=can_Y || Head.x<0 || Head.y<0)
+    if(Head.x>=can_X || Head.y>=can_Y || Head.x<0 || Head.y<0)//checks if snakes goes beyond canvas
     {
         GameOver();
         clearInterval(end_flag);
-
     }
     while (i < snake.length - 1) 
-    {
+    {   //this loop checks if snake has hit itself
         if ((snake[i].x == Head.x) && (snake[i].y == Head.y)) 
         {
 
@@ -157,7 +170,7 @@ function checkCollison(Head)
         i = i + 1;
     }
 }
-end_flag = setInterval(Refresh, 150);
+
 function GameOver()
 {
     ctx.font="50px MV Boli";
@@ -165,8 +178,7 @@ function GameOver()
     ctx.textAlign ="center"
     ctx.fillText("GAME OVER", can_X/2, can_Y/2);
     running=false;
-
-    
+    myinfo.textContent="Stopped..."
 }
 function wipeout_board()
 {
@@ -177,6 +189,74 @@ function wipeout_board()
 function resetGame()
 {   
     wipeout_board();
-    setTimeout(init,3000)
-    end_flag = setInterval(Refresh, 3000);
+    init();
+    Fruit=generateFruit();
+    window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth' 
+       });
+    const promise = new Promise((reslove)=>
+                            {   init();
+                                
+                                myinfo.textContent="Your game will start in " +timer;
+                                let stop=setInterval(()=>{
+                                                    timer=timer-1;
+                                                    myinfo.textContent="Your game will start in " +timer;
+                                                    if(timer==0)
+                                                    {  
+                                                        
+                                                        clearInterval(stop);
+                                                    }
+                                                },1000)
+                                
+                                setTimeout(reslove,3000);
+                            }
+)
+promise.then(
+    ()=>
+    {
+        RunGame(running)   
+    }
+    
+)
+
 }
+Fruit = generateFruit();//generates the first fruit
+let end_flag;
+function RunGame(running)
+{    
+    document.addEventListener('keydown', update_next_move);//calling the update_next_move depending on what key we press
+    
+    if(running)
+    {
+        end_flag=setInterval(Refresh,150)
+        
+    }
+    
+}
+let timer=3;
+const promise = new Promise((reslove)=>
+                            {   init();
+                                
+                                myinfo.textContent="Your game will start in " +timer;
+                                let stop=setInterval(()=>{
+                                                    timer=timer-1;
+                                                    myinfo.textContent="Your game will start in " +timer;
+                                                    if(timer==0)
+                                                    {   
+
+                                                        clearInterval(stop);
+                                                    }
+                                                },1000)
+                                
+                                setTimeout(reslove,3000);
+                            }
+)
+promise.then(
+    ()=>
+    {   
+       
+        RunGame(running)   
+    }
+)
