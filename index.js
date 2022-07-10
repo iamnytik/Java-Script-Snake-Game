@@ -39,7 +39,7 @@ class Snake_Obj_creator
 function init()
 {   
     
-    
+    //this function initialises the objects and variables
     next_move_X = square_size;
     next_move_Y = 0;
     scorediv = document.querySelector("#score");
@@ -59,8 +59,8 @@ function init()
 }
 function snake_square(snakeobj) 
 {
-    ctx.fillStyle = "rgba(0,128,0,255)"//filling the inner rectangle color
-    ctx.strokeStyle = "rgba(0,0,0,255)";//filling the rectangle frame color
+    ctx.fillStyle = "green"//filling the inner rectangle color
+    ctx.strokeStyle = "black";//filling the rectangle frame color
     ctx.fillRect(snakeobj.x, snakeobj.y, square_size-1, square_size-1)//actually draws the filled up green rectangle
     ctx.strokeRect(snakeobj.x, snakeobj.y, square_size-2,square_size-2)//actually draws the empty rect frame on top of the filled rectangles
 
@@ -70,15 +70,9 @@ function nextMove()
     function wipeout_tail(obj) 
     {
 
-        ctx.fillStyle = "rgba(255, 255, 255, 255)"//filling the inner rectangle color
-        ctx.strokeStyle = "rgba(255, 255, 255, 255)";//filling the rectangle frame color
-        
+        ctx.fillStyle = "white"//filling the inner rectangle color
         ctx.fillRect(obj.x-3, obj.y-3, square_size+2, square_size+2)//actually draws the filled up green rectangle
-        //ctx.strokeRect(obj.x, obj.y, square_size, square_size)
-        //actually draws the empty rect frame on top of the filled rectangles
-       // ctx.fillRect(obj.x, obj.y, square_size, square_size)
-       // ctx.strokeRect(obj.x, obj.y, square_size, square_size)
-
+       
     }
     let obj = snake[0];//take out first element
     wipeout_tail(obj);//color it white
@@ -173,7 +167,7 @@ function checkCollison(Head)
 }
 
 function GameOver()
-{
+{   //displays gameover
     ctx.font="50px MV Boli";
     ctx.fillStyle ="Red"
     ctx.textAlign ="center"
@@ -182,13 +176,13 @@ function GameOver()
     myinfo.textContent="Stopped..."
 }
 function wipeout_board()
-{
+{   //clears out he entire canvas
     ctx.fillStyle="white"
     ctx.fillRect(0, 0, can_X, can_Y)
     
 }
 function resetGame()
-{   
+{   //this function is called when you click Start/reset button
     wipeout_board();
     init();
     Fruit=generateFruit();
@@ -231,13 +225,13 @@ function RunGame(running)
     
     if(running)
     {
-        end_flag=setInterval(Refresh,150)
+        end_flag=setInterval(Refresh,150)//repeatedly  calling the Refresh button
         
     }
     
 }
 let timer=3;
-const promise = new Promise((reslove)=>
+const promise = new Promise((reslove)=>//this is a promise,i.e "If you finish this then do that"
                             {   init();
                                 
                                 myinfo.textContent="Your game will start in " +timer;
