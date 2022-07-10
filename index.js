@@ -59,10 +59,10 @@ function init()
 }
 function snake_square(snakeobj) 
 {
-    ctx.fillStyle = "green"//filling the inner rectangle color
-    ctx.strokeStyle = "black";//filling the rectangle frame color
-    ctx.fillRect(snakeobj.x, snakeobj.y, square_size, square_size)//actually draws the filled up green rectangle
-    ctx.strokeRect(snakeobj.x, snakeobj.y, square_size, square_size)//actually draws the empty rect frame on top of the filled rectangles
+    ctx.fillStyle = "rgba(0,128,0,255)"//filling the inner rectangle color
+    ctx.strokeStyle = "rgba(0,0,0,255)";//filling the rectangle frame color
+    ctx.fillRect(snakeobj.x, snakeobj.y, square_size-1, square_size-1)//actually draws the filled up green rectangle
+    ctx.strokeRect(snakeobj.x, snakeobj.y, square_size-2,square_size-2)//actually draws the empty rect frame on top of the filled rectangles
 
 }
 function nextMove() 
@@ -70,13 +70,14 @@ function nextMove()
     function wipeout_tail(obj) 
     {
 
-        ctx.fillStyle = "#ffffff"//filling the inner rectangle color
-        ctx.strokeStyle = "#ffffff";//filling the rectangle frame color
-        ctx.strokeRect(obj.x, obj.y, square_size, square_size)
-        ctx.fillRect(obj.x, obj.y, square_size, square_size)//actually draws the filled up green rectangle
+        ctx.fillStyle = "rgba(255, 255, 255, 255)"//filling the inner rectangle color
+        ctx.strokeStyle = "rgba(255, 255, 255, 255)";//filling the rectangle frame color
+        
+        ctx.fillRect(obj.x-3, obj.y-3, square_size+2, square_size+2)//actually draws the filled up green rectangle
+        //ctx.strokeRect(obj.x, obj.y, square_size, square_size)
         //actually draws the empty rect frame on top of the filled rectangles
-        ctx.fillRect(obj.x, obj.y, square_size, square_size)
-        ctx.strokeRect(obj.x, obj.y, square_size, square_size)
+       // ctx.fillRect(obj.x, obj.y, square_size, square_size)
+       // ctx.strokeRect(obj.x, obj.y, square_size, square_size)
 
     }
     let obj = snake[0];//take out first element
@@ -127,7 +128,7 @@ function generateFruit()//need to be repeatedly called
     function draw_square(X, Y) 
     {
         ctx.fillStyle = "red"//deciding the color to fill
-        ctx.fillRect(X, Y, square_size, square_size)//actually draws the filled up red rectangle
+        ctx.fillRect(X-1, Y-1, square_size, square_size)//actually draws the filled up red rectangle
     }
     draw_square(X, Y)
     return Fruit;
