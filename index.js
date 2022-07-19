@@ -99,18 +99,22 @@ function update_next_move(event)
         case (keyPressed === "ArrowLeft" && !goingRight):
             next_move_X = -square_size;
             next_move_Y = 0;
+            document.removeEventListener("keydown",update_next_move);
             break;
         case (keyPressed === "ArrowUp" && !goingDown):
             next_move_X = 0;
             next_move_Y = -square_size;
+            document.removeEventListener("keydown",update_next_move);
             break;
         case (keyPressed === "ArrowRight" && !goingLeft):
             next_move_X = square_size;
             next_move_Y = 0;
+            document.removeEventListener("keydown",update_next_move);
             break;
         case (keyPressed === "ArrowDown" && !goingUp):
             next_move_X = 0;
             next_move_Y = square_size;
+            document.removeEventListener("keydown",update_next_move);
             break;
     }
 }
@@ -130,6 +134,7 @@ function generateFruit()//need to be repeatedly called
 
 function Refresh() 
 {   myinfo.textContent="Running..."
+    
     nextMove();
     let Head = snake[snake.length - 1];
     checkCollison(Head);
@@ -141,6 +146,7 @@ function Refresh()
         newObj = new Snake_Obj_creator(snake[0].x - square_size, snake[0].y - square_size)
         snake_square(newObj);//adding a new snake square
         snake.unshift(newObj)
+        
     }
 }
 //let end_flag;
@@ -221,11 +227,14 @@ Fruit = generateFruit();//generates the first fruit
 let end_flag;
 function RunGame(running)
 {    
-    document.addEventListener('keydown', update_next_move);//calling the update_next_move depending on what key we press
+   
     
     if(running)
     {
-        end_flag=setInterval(Refresh,150)//repeatedly  calling the Refresh button
+        end_flag=setInterval(()=>
+        {   document.addEventListener("keydown",update_next_move);
+            Refresh();
+        },150)//repeatedly  calling the Refresh button
         
     }
     
