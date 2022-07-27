@@ -1,7 +1,8 @@
 # Java-Script-Snake-Game
 The classic game of snake written in a pure HTML,CSS,and Javascript sandwhich
 and just to let you know,this uses the HTML5 canvas elemet
-##How to I run this
+
+## How to I run this
 
   1.step one download
   
